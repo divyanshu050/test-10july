@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: blueviolet;
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+    }
+    div{
+        width: 500px;
+        background-color: aqua;
+        margin-top: 300px;
+        text-align: center;
+        border: 2px solid #191919;
+        padding: 5px
+        
+    }
+    .user{
+        background-color: rgb(199, 18, 18);
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+   
+</style>
+<body>
+    <div id="app">
+
+        <h3>Name</h3>
+        <h3>email</h3>
+        <h3>address</h3>
+        <h3>website</h3>
+    
+        <button id="btn" onclick="fetchdata()">Fetch Data</button>
+    </div>
+ 
+    <script>
+        function fetchdata(){
+    fetch("https://jsonplaceholder.typicode.com/users").then(response=>{
+        if(!response.ok){
+            throw Error("ERROR")
+        }
+        return response.json();
+    })
+    .then(data=>{
+        console.log(data);
+        const html = data
+        .map(user=>{
+            return`
+            <div class ="user">
+            <p>Name: ${user.name}</p>
+            <p>Email:${user.email}</p>
+            <p>address:${user.address}</p>
+            <p>website:${user.website}</p>
+            </div>
+            
+            `;
+            
+        })
+        .join("");
+        document.write(html)
+            document.querySelector("#app").insertAdjacentElement("afterbegin",html)
+            
+    })
+    .catch(error=>{
+        console.log(error);
+    })
+}
+
+    </script>
+</body>
+</html>
